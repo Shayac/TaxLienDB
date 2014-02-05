@@ -123,6 +123,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
+    <Compile Include="Controllers\RedemptionsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SubsequentsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -226,6 +227,7 @@
     <Content Include="Views\Subsequents\Properties.cshtml" />
     <Content Include="Views\Subsequents\Pay.cshtml" />
     <Content Include="Views\Reports\Property.cshtml" />
+    <Content Include="Views\Redemptions\Redeem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

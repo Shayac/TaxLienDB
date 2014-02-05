@@ -11,12 +11,31 @@
 }
 <div class="row">
     <div class="col-md-4">
+        
+        <form method="POST" action="~/Redemptions/InsertDate">
+            <div class="form-group">
+                <div class="control-group">
+                    <label for="date-picker-3" class="control-label">Calculate to</label>
+                    <div class="controls">
+                        <div class="input-group">
+                            <input type="hidden" name="propertyId" value="@property.Id"/>
+                            <input id="date-picker-3" type="text" class="date-picker form-control" name="redemptionDate" />
+                            <label for="date-picker-3" class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success" value="Calculate"/>
+        </form>
+
         <p>@property.OwnerFirstName, @property.OwnerLastName</p>
         <p>@municipality.MunicipalityName</p>
         <p>@property.HouseNum @property.StreetName</p>
         <p>@property.Block, @property.Lot 
-            @if(property.Qualifier != null && property.Qualifier != 0)
-            {@:, @property.Qualifier
+            @if (property.Qualifier != null && property.Qualifier != 0)
+            {
+                @:, @property.Qualifier
             }</p>
         <br/>
         <hr/>
@@ -67,3 +86,8 @@
         
     </div>
 </div>
+
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="~/Scripts/TaxLienScripts.js" type="text/javascript"></script>
+}

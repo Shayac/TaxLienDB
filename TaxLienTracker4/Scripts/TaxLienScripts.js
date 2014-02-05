@@ -33,7 +33,6 @@
     //function for inserting paidToDate into subsequents form
     $("#subsequentsDatePicker").on("change", function() {
         var date = $(this).val();
-        console.log(date);
         $(".OutLayDate").val(date);
     });
 
