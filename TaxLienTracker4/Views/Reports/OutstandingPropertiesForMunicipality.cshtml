@@ -1,0 +1,16 @@
+﻿@using DataLayer
+@model TaxLienTracker4.Models.OutstandingPropertiesForMunicipalityViewModel
+
+<table>
+    <tr>
+        <th>Block</th>
+        <th>Lot</th>
+    </tr>
+    @foreach (Property property in Model.Properties)
+    {
+        <tr>
+            <td>@property.Block</td>
+            <td>@property.Lot</td>
+        </tr>
+    }
+</table>

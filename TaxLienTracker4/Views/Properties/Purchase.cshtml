@@ -1,0 +1,145 @@
+﻿@using DataLayer
+@model TaxLienTracker4.Models.PurchaseViewModel
+
+<form method="POST">
+    
+    <!---- Property Info ---->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Owner First Name</label>
+                <input type="text" class="form-control" placeholder="Owner First Name" name="Property.OwnerFirstName">
+            </div>
+            <div class="form-group">
+                <label>Owner Last Name</label>
+                <input type="text" class="form-control" placeholder="Owner Last Name" name="Property.OwnerLastName">
+            </div>
+            <div class="form-group">
+                <label>County</label>
+                <select name="county" class="form-control" id="countyDropDown">
+                    @foreach (County county in Model.Counties)
+                    {
+                        <option value="@county.Id">@county.CountyName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Municipality</label>
+                <select name="property.MunicipalityId" class="form-control" id="municipalityDropDown">
+                </select>
+            </div>
+            <div class="form-group ">
+                <label>Block</label>
+                <input type="text" class="form-control" placeholder="Block" id="Block" name="Property.Block"/>
+            </div>
+            <div class="form-group ">
+                <label>Lot</label>
+                <input type="text" class="form-control" placeholder="Lot" id="Lot" name="Property.Lot"/>
+            </div>
+            <div class="form-group">
+                <label>Qualifier</label>
+                <input type="text" class="form-control" placeholder="Qualifier" id="Qualifier" name="Property.Qualifier"/>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>House Number</label>
+                <input type="text" class="form-control" placeholder="House Number" id="HouseNumber" name="Property.HouseNum">
+            </div>
+            <div class="form-group">
+                <label>Street Name</label>
+                <input type="text" class="form-control" placeholder="Street Name" id="StreetName" name="Property.StreetName">
+            </div>
+            <div class="form-group">
+                <label>Property Type</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Property.PropertyTypeId" id="optionsRadios1" value="1" checked>Residential
+                    </label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Property.PropertyTypeId" id="optionsRadios2" value="2">Commercial
+                    </label>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!---- Certificate Info ---->
+    <hr/>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Certificate Holder First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" name="Certificate.CertHolderFirstName">
+            </div>
+            <div class="form-group">
+                <label>Certificate Holder Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" name="Certificate.CertHolderLastName">
+            </div>
+            <div class="form-group">
+                <div class="control-group">
+                    <label for="date-picker-3" class="control-label">Date Purchased</label>
+                    <div class="controls">
+                        <div class="input-group">
+                            <input id="date-picker-3" type="text" class="date-picker form-control" name="Certificate.DateOfPurchase" />
+                            <label for="date-picker-3" class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Lien Amount</label>
+                <input type="text" class="form-control" placeholder="Lien Amount" name="Certificate.LienAmount" />
+            </div>
+            <div class="form-group">
+                <label>Premium</label>
+                <input type="text" class="form-control" placeholder="Premium Amount" name="Certificate.Premium"/>
+            </div>
+            <div class="form-group">
+                <label>Interest</label> 
+                <input type="text" class="form-control" placeholder="Interest" name="Certificate.InterestRate"/>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Lien Type</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Certificate.CertificateType" id="radioTax" value="1" checked>Tax</label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Certificate.CertificateType" id="radioWater" value="2">Water</label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Certificate.CertificateType" id="radioSewer" value="3">Sewer</label>
+                </div>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Certificate.CertificateType" id="radioOther" value="4">Other</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <p class="text-danger">This Municipality requires a Look Up</p>
+                <label>Looked Up</label>
+@*                <div class="checkbox">*@
+                    <label>
+                        @Html.CheckBox("Certificate.LookedUp")
+@*                        <input type="checkbox" name="Certificate.LookedUp" > Looked Up*@
+                    </label>
+@*                </div>*@
+            </div>
+            <input type="submit" class="btn btn-primary" value="Submit"/>
+        </div>
+    </div>
+</form>
+
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="~/Scripts/TaxLienScripts.js" type="text/javascript"></script>
+}
