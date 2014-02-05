@@ -10,6 +10,9 @@ namespace BusinessLayer
 {
     public class EntityManager
     {
+
+        #region Add Entities
+
         public void Add(Property property)
         {
             using (var context = new TaxLienDataBaseEntities())
@@ -57,12 +60,51 @@ namespace BusinessLayer
 
         public void Add(Subsequent subsequent)
         {
+
             using (var context = new TaxLienDataBaseEntities())
             {
+                Property property = Property(subsequent.PropertyId);
+
+                foreach (Subsequent s in property.Subsequents)
+                //adds Amount to above1500 if any previous sub has above1500 and exits method
+                {
+                    if (s.Above1500 != 0)
+                    {
+                        subsequent.Above1500 = subsequent.SubsequentAmount;
+                        return;
+                    }
+                }
+
+                decimal total= property.Certificates.Sum(c => c.LienAmount);
+
+                
+                if (property.Subsequents.Any())
+                {
+                    total += property.Subsequents.Sum(s => s.SubsequentAmount);
+                }
+
+                if (total <= 1500m && (total + subsequent.SubsequentAmount) <= 1500m) //before any subs hit 1500
+                {
+                    subsequent.Below1500 = subsequent.SubsequentAmount;
+                }
+                else if (total <= 1500m && (total + subsequent.SubsequentAmount) > 1500m) //this sub hits 1500
+                {
+                    subsequent.Below1500 = 1500m - total;
+                    subsequent.Above1500 = subsequent.SubsequentAmount - subsequent.Below1500;
+                }
+                else if (total > 1500) //previous subs hit 1500
+                {
+                    subsequent.Above1500 = subsequent.SubsequentAmount;
+                }
+
                 context.Subsequents.Add(subsequent);
                 context.SaveChanges();
             }
         }
+
+        
+
+        #endregion
 
         #region Retrieval Methods
 
@@ -97,6 +139,19 @@ namespace BusinessLayer
             return municipalities;
         }
 
+        public Property Property(int propertyId)
+        {
+
+            Property property;
+            using (var context = new TaxLienDataBaseEntities())
+            {
+
+                property = context.Properties.Include(x => x.Certificates).Include(x=>x.Subsequents).Include(x=>x.Earnings).Include(x => x.Municipality).FirstOrDefault(p => p.Id == propertyId);
+            }
+
+            return property;
+        }
+
         public IEnumerable<Property> Properties(int municipalityId)
         {
             IEnumerable<Property> properties = new List<Property>();
@@ -113,8 +168,8 @@ namespace BusinessLayer
             using (var context = new TaxLienDataBaseEntities())
             {
                 properties =
-                    context.Properties.Where(
-                        p => p.MunicipalityId == municipalityId && p.Certificates.All(c => c.RedemptionDate != null))
+                    context.Properties.Include(p => p.Certificates).Where(
+                        p => p.MunicipalityId == municipalityId && p.Certificates.Any() && p.Certificates.All(c => c.RedemptionDate == null))
                            .ToList();
             }
             return properties;

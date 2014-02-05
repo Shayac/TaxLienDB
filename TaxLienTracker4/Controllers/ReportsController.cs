@@ -19,5 +19,14 @@ namespace TaxLienTracker4.Controllers
 
             return View(model);
         }
+
+        public ActionResult Property(int id)
+        {
+            var model = new PropertyEarningsProjectionViewModel()
+                {
+                    Property = _entityManager.Property(id)
+                };
+            return View(model);
+        }
     }
 }

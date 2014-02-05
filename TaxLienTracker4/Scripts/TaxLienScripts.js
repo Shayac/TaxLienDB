@@ -17,7 +17,6 @@
 
     //function for adding selected municipality into form input value
     $('#municipalityDropDown').on('change', function () {
-        console.log($(this).val());
         $('input[name=municipalityId]').val($(this).val());
     });
 
@@ -31,7 +30,12 @@
         $("#msg").text(val + " changed");
     });
 
-
+    //function for inserting paidToDate into subsequents form
+    $("#subsequentsDatePicker").on("change", function() {
+        var date = $(this).val();
+        console.log(date);
+        $(".OutLayDate").val(date);
+    });
 
 })
 

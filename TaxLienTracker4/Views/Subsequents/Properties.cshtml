@@ -1,0 +1,22 @@
+﻿@using DataLayer
+@model TaxLienTracker4.Models.OutstandingPropertiesForMunicipalityViewModel
+
+<div class="row">
+    <div class="col-md-4">
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <th>Block</th>
+                <th>Lot</th>
+                <th></th>
+            </tr>
+            @foreach (Property property in Model.Properties)
+            {
+                <tr>
+                    <td>@property.Block</td>
+                    <td>@property.Lot</td>
+                    <td><a class="ui-button-text" href="/Subsequents/Pay/@property.Id">Pay</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

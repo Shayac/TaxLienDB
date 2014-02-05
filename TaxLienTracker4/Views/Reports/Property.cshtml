@@ -1,0 +1,69 @@
+﻿@using System.Collections
+@using DataLayer
+@model TaxLienTracker4.Models.PropertyEarningsProjectionViewModel
+@{
+    Property property = Model.Property;
+    Municipality municipality = Model.Property.Municipality;
+    IEnumerable<Certificate> certificates = Model.Property.Certificates;
+    Certificate certificate = certificates.First();
+    IEnumerable<Subsequent> subsequents = Model.Property.Subsequents;
+    IEnumerable<Earning> earnings = Model.Property.Earnings;
+}
+<div class="row">
+    <div class="col-md-4">
+        <p>@property.OwnerFirstName, @property.OwnerLastName</p>
+        <p>@municipality.MunicipalityName</p>
+        <p>@property.HouseNum @property.StreetName</p>
+        <p>@property.Block, @property.Lot 
+            @if(property.Qualifier != null && property.Qualifier != 0)
+            {@:, @property.Qualifier
+            }</p>
+        <br/>
+        <hr/>
+        <p>@certificate.CertHolderFirstName @certificate.CertHolderLastName</p>
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <th>Certificate Type</th>
+                <th>Lien Amount</th>
+                <th>Premium</th>
+                <th>Interest Rate</th>
+                <th>Looked Up</th>
+            </tr>
+            @foreach (Certificate c in certificates)
+            {
+                <tr>
+                    <td>@c.CertificateType.ToString()</td>
+                    <td>@c.LienAmount</td>
+                    <td>@c.Premium</td>
+                    <td>@c.InterestRate</td>
+                    <td>@c.LookedUp</td>
+                </tr>
+            }
+        </table>
+        
+        <div class="col-md-4">
+            <table>
+                <tr>
+                    <th>Subsequent Amount</th>
+                    <th>Below 1500</th>
+                    <th>Above 1500</th>
+                    <th>Outlay Date</th>
+                    <th>Earnings</th>
+                </tr>
+                @foreach (Subsequent s in subsequents)
+                {
+                    <tr>
+                        <td>@s.SubsequentAmount</td>
+                        <td>@s.Below1500</td>
+                        <td>@s.Above1500</td>
+                        <td>@s.OutLayDate</td>
+                        <td></td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+
+        
+    </div>
+</div>
