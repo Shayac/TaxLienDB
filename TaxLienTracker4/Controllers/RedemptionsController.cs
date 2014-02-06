@@ -28,6 +28,10 @@ namespace TaxLienTracker4.Controllers
         [HttpPost]
         public ActionResult InsertDate(DateTime redemptionDate, int propertyId)
         {
+
+
+
+
             var model = new PropertyEarningsProjectionViewModel()
                 {
                     Property = _entityManager.Property(propertyId)
