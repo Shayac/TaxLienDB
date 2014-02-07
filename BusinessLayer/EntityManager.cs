@@ -49,11 +49,15 @@ namespace BusinessLayer
             }
         }
 
-        public void Add(Earning earning)
+        public void Add(IEnumerable<Earning> earnings)
         {
             using (var context = new TaxLienDataBaseEntities())
             {
-                context.Earnings.Add(earning);
+                foreach (var earning in earnings)
+                {
+                    context.Earnings.Add(earning);
+                }
+                
                 context.SaveChanges();
             }
         }
@@ -146,7 +150,9 @@ namespace BusinessLayer
             using (var context = new TaxLienDataBaseEntities())
             {
 
-                property = context.Properties.Include(x => x.Certificates).Include(x=>x.Subsequents).Include(x=>x.Earnings).Include(x => x.Municipality).FirstOrDefault(p => p.Id == propertyId);
+                property = 
+                    context.Properties.Include(x => x.Certificates).Include(x=>x.Subsequents)
+                    .Include(x=>x.Earnings).Include(x => x.Municipality).FirstOrDefault(p => p.Id == propertyId);
             }
 
             return property;

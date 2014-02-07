@@ -36,5 +36,7 @@
         $(".OutLayDate").val(date);
     });
 
+
+   
 })
 

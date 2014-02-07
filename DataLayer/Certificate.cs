@@ -30,6 +30,13 @@ namespace DataLayer
         public System.DateTime DateOfPurchase { get; set; }
         public Nullable<System.DateTime> RedemptionDate { get; set; }
         public Nullable<int> CertificateType { get; set; }
+
+        public TimeSpan? AccrualPeriod
+        {
+            get { return RedemptionDate - DateOfPurchase; }
+        }
+
+        public Earning Earning { get; set; }
     
         public virtual CertificateType CertificateType1 { get; set; }
         public virtual Property Property { get; set; }

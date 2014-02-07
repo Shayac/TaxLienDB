@@ -1,0 +1,143 @@
+﻿@using System.Collections
+@using DataLayer
+@model Property
+@{
+    Property property = Model;
+    Municipality municipality = Model.Municipality;
+    IEnumerable<Certificate> certificates = Model.Certificates;
+    Certificate certificate = certificates.First();
+    IEnumerable<Subsequent> subsequents = Model.Subsequents;
+    IEnumerable<Earning> earnings = Model.Earnings;
+    decimal twoFourSix = 0m;
+    if (property.Earnings.Any(e => e.EarningsTypeId == 2))
+    {
+        twoFourSix = property.Earnings.First(e => e.EarningsTypeId == 2).Amount;
+    }
+    decimal yearEndPenalty = 0m;
+    if (property.Earnings.Any(e => e.EarningsTypeId == 3))
+    {
+        yearEndPenalty = property.Earnings.First(e => e.EarningsTypeId == 3).Amount;
+    }
+    decimal lookUpFee = 0m;
+    if (property.Earnings.Any(e => e.EarningsTypeId == 4))
+    {
+        lookUpFee = property.Earnings.First(e => e.EarningsTypeId == 4).Amount;
+    }
+}
+
+
+
+    
+    
+    
+    <div class="row">
+        <div class="col-md-4">
+            
+            <table class="table table-bordered table-striped table-hover">
+                <tr>
+                    <th>Certificate Type</th>
+                    <th>Lien Amount</th>
+                    <th>Premium</th>
+                    <th>Interest Rate</th>
+                    <th>Looked Up</th>
+                    <th>Accrual Period</th>
+                    <th>Interest</th>
+                </tr>
+                @foreach (Certificate c in certificates)
+                {
+                    <tr>
+                        <td>@c.CertificateType.ToString()</td>
+                        <td>@Math.Round(c.LienAmount,2)</td>
+                        <td>@c.Premium</td>
+                        <td>@c.InterestRate</td>
+                        <td>@c.LookedUp</td>
+                        @if (c.AccrualPeriod != null)
+                        {
+                            <td>@c.AccrualPeriod.Value.Days Days</td>
+                        }
+                        @if (c.Earning != null)
+                        {
+                            <td>@c.Earning.Amount</td>
+                        }
+                    
+                    </tr>
+                }
+
+            </table>
+
+        </div>
+    </div>
+
+    
+    <div class="row">   
+        <div class="col-md-4">
+         
+            <table class="table table-bordered table-striped table-hover">
+                <tr>
+                    <th>Subsequent Type</th>
+                    <th>Subsequent Amount</th>
+                    <th>Below 1500</th>
+                    <th>Above 1500</th>
+                    <th>Outlay Date</th>
+                    <th>Accrual Period</th>
+                    <th>Earnings</th>
+                </tr>
+                @foreach (Subsequent s in subsequents)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@s.SubsequentAmount</td>
+                        <td>@s.Below1500</td>
+                        <td>@s.Above1500</td>
+                        <td>@s.OutLayDate</td>
+                        <td>@s.AccrualPeriod</td>
+                        <td>@s.InterestEarnings</td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+        
+            <div class="form-group">
+                <label>2-4-6 Penalty</label>
+                <input type="hidden" name="property.Earnings[1].TypeId" value="2"/>
+                <input type="text" class="form-control" name="property.Earnings[1].Amount" value="@twoFourSix"/>
+            </div>
+            <div class="form-group">
+                <label>Year End Penalty</label>
+                <input type="hidden" name="property.Earnings[2].TypeId" value="3"/>
+                <input type="text" class="form-control" name="property.Earnings[2].Amount" value="@yearEndPenalty"/>
+            </div>
+            <div class="form-group">
+                <label>Lookup Fee</label>
+                <input type="hidden" name="property.Earnings[3].TypeId" value="4"/>
+                <input type="text" class="form-control" name="property.Earnings[3].Amount" value="@lookUpFee"/>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+          
+            <a class="btn btn-primary" href="~/Reports/Property/@Model.Id">View Property Earnings</a>
+            <input type="submit" value="Save" class="btn btn-primary"/>
+
+        </div>
+    </div>
+
+    
+        
+
+        
+    
+    
+
+
+@section scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script src="~/Scripts/TaxLienScripts.js" type="text/javascript"></script>
+}

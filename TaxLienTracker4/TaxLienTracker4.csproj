@@ -122,6 +122,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\RedemptionsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -131,7 +132,6 @@
     </Compile>
     <Compile Include="Models\OutstandingPropertiesForMunicipalityViewModel.cs" />
     <Compile Include="Models\PaySubsequentsViewModel.cs" />
-    <Compile Include="Models\PropertyEarningsProjectionViewModel.cs" />
     <Compile Include="Models\PurchaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -227,7 +227,9 @@
     <Content Include="Views\Subsequents\Properties.cshtml" />
     <Content Include="Views\Subsequents\Pay.cshtml" />
     <Content Include="Views\Reports\Property.cshtml" />
-    <Content Include="Views\Redemptions\Redeem.cshtml" />
+    <Content Include="Views\Redemptions\CalculateEarnings.cshtml" />
+    <Content Include="Views\Redemptions\RedemptionDate.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -19,6 +19,7 @@ namespace DataLayer
         public decimal Above1500 { get; set; }
         public decimal Below1500 { get; set; }
         public System.DateTime OutLayDate { get; set; }
+        public TimeSpan? AccrualPeriod { get; set; }
         public int CertificateId { get; set; }
         public int CertificateType { get; set; }
         public int PropertyId { get; set; }

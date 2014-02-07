@@ -13,37 +13,51 @@ namespace TaxLienTracker4.Controllers
     {
         //
         // GET: /Redemptions/
-        EntityManager _entityManager = new EntityManager();
-
-        public ActionResult Redeem(int id)
+        private EntityManager _entityManager = new EntityManager();
+        
+        public ActionResult Index()
         {
-            var model = new PropertyEarningsProjectionViewModel()
-                {
-                    Property = _entityManager.Property(id)
-                };
-            return View(model);
+            var counties = _entityManager.Counties();
 
+            return View("~/Views/Subsequents/Index.cshtml", counties);
         }
 
-        [HttpPost]
-        public ActionResult InsertDate(DateTime redemptionDate, int propertyId)
+        public ActionResult RedemptionDate(int id)
         {
-
-
-
-
-            var model = new PropertyEarningsProjectionViewModel()
-                {
-                    Property = _entityManager.Property(propertyId)
-                };
-            foreach (Certificate certificate in model.Property.Certificates)
+            return View(_entityManager.Property(id));
+        }
+        
+        
+        [HttpPost]
+        public ActionResult CalculateEarnings(DateTime redemptionDate, int propertyId)
+        {
+            Property property = _entityManager.Property(propertyId);
+            
+            foreach (Certificate certificate in property.Certificates)
             {
                 certificate.RedemptionDate = redemptionDate;
+                EarningsCalculator.CalculateCertificatesInterest(certificate, propertyId);
+                if (certificate.Earning != null)
+                {
+                    property.Earnings.Add(certificate.Earning);
+                }
+
             }
-            
-            return View("Redeem", model);
-            
+
+            foreach (Subsequent subsequent in property.Subsequents)
+            {
+                subsequent.AccrualPeriod = property.Certificates.First().RedemptionDate - subsequent.OutLayDate;
+                EarningsCalculator.CalculateSubsequentInterest(subsequent);
+            }
+
+            EarningsCalculator.Calculate246Penalty(property);
+            EarningsCalculator.CalculateYearEndPenalty(property);
+
+            _entityManager.Add(property.Earnings);
+
+           return View(property);
+
         }
 
-    }
+      }
 }

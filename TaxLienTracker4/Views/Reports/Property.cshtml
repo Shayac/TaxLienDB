@@ -1,13 +1,13 @@
 ﻿@using System.Collections
 @using DataLayer
-@model TaxLienTracker4.Models.PropertyEarningsProjectionViewModel
+@model  Property
 @{
-    Property property = Model.Property;
-    Municipality municipality = Model.Property.Municipality;
-    IEnumerable<Certificate> certificates = Model.Property.Certificates;
+    Property property = Model;
+    Municipality municipality = Model.Municipality;
+    IEnumerable<Certificate> certificates = Model.Certificates;
     Certificate certificate = certificates.First();
-    IEnumerable<Subsequent> subsequents = Model.Property.Subsequents;
-    IEnumerable<Earning> earnings = Model.Property.Earnings;
+    IEnumerable<Subsequent> subsequents = Model.Subsequents;
+    IEnumerable<Earning> earnings = Model.Earnings;
 }
 <div class="row">
     <div class="col-md-4">
