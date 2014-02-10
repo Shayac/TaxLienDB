@@ -230,6 +230,8 @@
     <Content Include="Views\Redemptions\CalculateEarnings.cshtml" />
     <Content Include="Views\Redemptions\RedemptionDate.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_CountySelector.cshtml" />
+    <Content Include="Views\Redemptions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -263,7 +265,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>2145</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:15171/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

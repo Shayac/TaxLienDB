@@ -1,16 +1,29 @@
 ﻿@using DataLayer
 @model TaxLienTracker4.Models.OutstandingPropertiesForMunicipalityViewModel
 
-<table>
-    <tr>
-        <th>Block</th>
-        <th>Lot</th>
-    </tr>
-    @foreach (Property property in Model.Properties)
-    {
-        <tr>
-            <td>@property.Block</td>
-            <td>@property.Lot</td>
-        </tr>
-    }
-</table>
+<div class="row">
+    <div class="col-md-6">
+        
+   
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <th>Block</th>
+                <th>Lot</th>
+                <th>Links</th>
+            </tr>
+            @foreach (Property property in Model.Properties)
+            {
+                <tr>
+                    <td>@property.Block</td>
+                    <td>@property.Lot</td>
+                    <td>
+                        @Html.ActionLink("Pay Subsequents", "Pay", "Subsequents", new {id = @property.Id}, new {@class = "btn btn-default"})
+                        @Html.ActionLink("Redeem", "RedemptionDate", "Redemptions", new {id = @property.Id}, new {@class = "btn btn-default"})
+                        @Html.ActionLink("Report", "Property", "Reports", new {id = @property.Id}, new {@class = "btn btn-default"})
+                    </td>
+            
+                </tr>
+            }
+        </table>
+    </div>
+</div>

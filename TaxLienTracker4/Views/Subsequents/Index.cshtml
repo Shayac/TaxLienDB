@@ -2,25 +2,9 @@
 @model System.Collections.Generic.IEnumerable<DataLayer.County>
 
 <div class="row">
-    
-    <!--Select County And Municipality Dropdowns-->
-    <div class="col-md-3">
-        <div class="form-group">
-            <label>Select County</label>
-            <select name="county" class="form-control" id="countyDropDown">
-                @foreach (County county in Model)
-                {
-                    <option value="@county.Id">@county.CountyName</option>
-                }
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Select Municipality</label>
-            <select name="MunicipalityId" class="form-control" id="municipalityDropDown">
-            </select>
-        </div>
-    </div>
+   
+    @Html.Action("CountyPicker","Home")
+   
     <div class="col-md-3 col-md-offset-1">
     <!--Buttons-->
   

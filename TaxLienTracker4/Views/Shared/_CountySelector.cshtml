@@ -1,0 +1,22 @@
+﻿@using DataLayer
+@model IEnumerable<County>
+
+
+ <!--Select County And Municipality Dropdowns-->
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Select County</label>
+            <select class="form-control" id="countyDropDown">
+                @foreach (County county in Model)
+                {
+                    <option value="@county.Id">@county.CountyName</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Select Municipality</label>
+            <select name="municipalityId" class="form-control" id="municipalityDropDown">
+            </select>
+        </div>
+    </div>

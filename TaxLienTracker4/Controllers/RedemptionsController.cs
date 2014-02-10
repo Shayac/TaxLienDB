@@ -13,13 +13,11 @@ namespace TaxLienTracker4.Controllers
     {
         //
         // GET: /Redemptions/
-        private EntityManager _entityManager = new EntityManager();
+        private readonly EntityManager _entityManager = new EntityManager();
         
         public ActionResult Index()
         {
-            var counties = _entityManager.Counties();
-
-            return View("~/Views/Subsequents/Index.cshtml", counties);
+            return View();
         }
 
         public ActionResult RedemptionDate(int id)
