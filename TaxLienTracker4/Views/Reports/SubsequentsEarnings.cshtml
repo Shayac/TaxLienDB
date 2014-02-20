@@ -1,0 +1,37 @@
+﻿@using DataLayer
+@model DataLayer.Property
+
+<div class="row">
+    <div class="col-md-8">
+
+        <table class="table table-bordered table-striped">
+            <tr>
+                <th>Outlay Date</th>
+                <th>Amount</th>
+                <th>Below $1500</th>
+                <th>Above $1500</th>
+                <th>Accrual Period</th>
+                <th>Interest</th>
+            </tr>
+            @foreach (Subsequent subsequent in Model.Subsequents)
+            {
+                <tr>
+                    <td>@subsequent.OutLayDate</td>
+                    <td>@subsequent.SubsequentAmount</td>
+                    <td>@subsequent.Below1500</td>
+                    <td>@subsequent.Above1500</td>
+                    <td>@subsequent.AccrualPeriod</td>
+                    <td>@subsequent.InterestEarnings</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <th>Total</th>
+                <td>@Model.Earnings.First(e => e.EarningsTypeId == 2).Amount</td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -26,7 +26,7 @@ namespace DataLayer
         public bool Calendar { get; set; }
         public bool Fiscal { get; set; }
     
-        public virtual County County { get; set; }
         public virtual ICollection<Property> Properties { get; set; }
+        public virtual County County { get; set; }
     }
 }

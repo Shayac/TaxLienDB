@@ -1,0 +1,55 @@
+﻿@using System.Collections
+@using DataLayer
+@model TaxLienTracker4.Models.PropertyEarningsViewModel
+
+@{
+    Property p = Model.Property;
+    List<Certificate> c = Model.Certificates;
+    List<Earning> e = Model.Earnings;
+    List<Subsequent> s = Model.Subsequents;
+} 
+
+<form method="POST">
+    <div class="row">
+        <div class="col-md-2">
+            <input type="hidden" value="@p.Id" name="property.Id" />
+            <label for="Property.OwnerFirstName">Owner First Name</label>
+            <input type="text" value="@p.OwnerFirstName" name="property.OwnerFirstName" id="Property.OwnerFirstName" class="form-control"/>
+            <label for="Property.OwnerLastName">Owner Last Name</label>
+            <input type="text" value="@p.OwnerLastName" name="property.OwnerLastName" id="Property.OwnerLastName" class="form-control"/>
+            @*        <input type="text" value="@p.Block" name="property.Block"/>*@
+            @*        <input type="text" value="@p.Lot" name="property.Lot"/>*@
+            @*        <input type="text" value="@p.Qualifier" name="property.Qualifier"/>*@
+            @*        <input type="text" value="@p.StreetName" name="property.StreetName"/>*@
+            @*        <input type="text" value="@p.HouseNum" name="property.HouseNum"/>*@
+            @*        <input type="text" value="@p.MunicipalityId" name="property.MunicipalityId"/>*@
+            @*        <input type="text" value="@p.PropertyTypeId" name="property.PropertyTypeId"/>*@
+        </div>
+    
+        @for (int i = 0; i < c.Count(); i++)
+        {
+            <div class="col-md-2">
+                <label for="certHolder.firstName">Holder First Name</label>
+                <input type="text" value="@c[i].CertHolderFirstName" name="property.Certificates[@i].CertHolderFirstName" id="certHolder.firstName" class="form-control"/>
+                <label for="certHolder.lastName">Holder Last Name</label>
+                <input type="text" value="@c[i].CertHolderLastName" name="property.Certificates[@i].CertHolderLastName" id="certHolder.lastName" class="form-control"/>
+                @*            <input type="text" value="@c[i].LienAmount" name="property.Certificates[@i].LienAmount"/>*@
+                @*            <input type="text" value="@c[i].Premium" name="property.Certificates[@i].Premium"/>*@
+                @*            <input type="text" value="@c[i].InterestRate" name="property.Certificates[@i].InterestRate"/>*@
+            </div>
+        }
+    
+        @*    @for (int i = 0; i < s.Count(); i++)*@
+        @*    {*@
+        @*        <div class="row">*@
+        @*            <input type="text" value="@s[i].SubsequentAmount" name=""/>*@
+        @*        </div>*@
+        @*    }*@
+
+    
+    </div>
+    
+    <div class="row">
+        <input type="submit" value="Save Changes" class="btn btn-success " style="margin: 20px"/>
+    </div>
+</form>

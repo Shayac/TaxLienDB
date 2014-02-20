@@ -1,69 +1,42 @@
 ﻿@using System.Collections
 @using DataLayer
-@model  Property
-@{
-    Property property = Model;
-    Municipality municipality = Model.Municipality;
-    IEnumerable<Certificate> certificates = Model.Certificates;
-    Certificate certificate = certificates.First();
-    IEnumerable<Subsequent> subsequents = Model.Subsequents;
-    IEnumerable<Earning> earnings = Model.Earnings;
-}
+@model  TaxLienTracker4.Models.PropertyEarningsViewModel
+
 <div class="row">
-    <div class="col-md-4">
-        <p>@property.OwnerFirstName, @property.OwnerLastName</p>
-        <p>@municipality.MunicipalityName</p>
-        <p>@property.HouseNum @property.StreetName</p>
-        <p>@property.Block, @property.Lot 
-            @if(property.Qualifier != null && property.Qualifier != 0)
-            {@:, @property.Qualifier
-            }</p>
-        <br/>
-        <hr/>
-        <p>@certificate.CertHolderFirstName @certificate.CertHolderLastName</p>
-        <table class="table table-bordered table-striped table-hover">
-            <tr>
-                <th>Certificate Type</th>
-                <th>Lien Amount</th>
-                <th>Premium</th>
-                <th>Interest Rate</th>
-                <th>Looked Up</th>
-            </tr>
-            @foreach (Certificate c in certificates)
-            {
-                <tr>
-                    <td>@c.CertificateType.ToString()</td>
-                    <td>@c.LienAmount</td>
-                    <td>@c.Premium</td>
-                    <td>@c.InterestRate</td>
-                    <td>@c.LookedUp</td>
-                </tr>
-            }
-        </table>
-        
-        <div class="col-md-4">
-            <table>
-                <tr>
-                    <th>Subsequent Amount</th>
-                    <th>Below 1500</th>
-                    <th>Above 1500</th>
-                    <th>Outlay Date</th>
-                    <th>Earnings</th>
-                </tr>
-                @foreach (Subsequent s in subsequents)
-                {
-                    <tr>
-                        <td>@s.SubsequentAmount</td>
-                        <td>@s.Below1500</td>
-                        <td>@s.Above1500</td>
-                        <td>@s.OutLayDate</td>
-                        <td>@s.InterestEarnings</td>
-                    </tr>
-                }
-            </table>
-        </div>
-
-
-        
+    <div class="col-md-2">
+        <label for="PropName">Property Owner</label>
+        <input type="text" class="form-control" readonly="readonly" value="@Model.Property.OwnerFirstName @Model.Property.OwnerLastName" id="PropName"/>
+    </div>
+    <div class="col-md-2">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" readonly="readonly" value="@Model.Property.HouseNum @Model.Property.StreetName" id="address">
+    </div>
+    <div class="col-md-2">
+        <label for="municipality">Municipality</label>
+        <input type="text" class="form-control" readonly="readonly" value=" @Model.Property.Municipality.MunicipalityName" id="municipality">
+    </div>
+    <div class="col-md-2">
+        <label for="blockLot">Block / Lot</label>
+        <input type="text" class="form-control" readonly="readonly" value="@Model.Property.Block @Model.Property.Lot @Model.Property.Qualifier" id="blockLot">
     </div>
 </div>
+<div class="row">
+    <div class="col-md-2">
+        <label for="PurchaseDate">Original Date of Purchase</label>
+        <input type="text" class="form-control" readonly="readonly" value="@Model.Property.Certificates.First().DateOfPurchase" id="PurchaseDate"/>
+    </div>
+    <div class="col-md-2">
+        <label for="RedemptionDate">Date of Redemption</label>
+        <input type="text" class="form-control" readonly="readonly" value="@Model.Property.Certificates.First().RedemptionDate" id="RedemptionDate"/>
+    </div>
+    <div class="col-md-2">
+        <label for="totalOutlay">Total Outlay</label>
+        <input type="text" class="form-control" readonly="readonly" value="@Model.TotalInvestment" id="totalOutlay"/>
+    </div>
+    <div class="col-md-2">
+        <label for="totalEarnings">Total Earnings</label>
+        <input type="text" class="form-control" readonly="readonly" value="@Model.TotalEarnings" id="totalEarnings"/>
+    </div>
+    
+</div>
+      @Html.ActionLink("Earnings","PropertyEarnings",new {propertyId = Model.Property.Id}) 

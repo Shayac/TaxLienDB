@@ -1,0 +1,70 @@
+﻿@using DataLayer
+@model TaxLienTracker4.Models.MunicipalitiesViewModel
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <th>Municipality Name</th>
+                <th>Year Type</th>
+                <th>Edit</th>
+            </tr>
+            @foreach (Municipality municipality in Model.Municipalities)
+            {
+                <tr>
+                    <td>@municipality.MunicipalityName</td>
+                    @if (municipality.Calendar)
+                    {
+                        <td>Calendar</td>
+                    }
+                    else
+                    {
+                        <td>Fiscal</td>
+                    }
+                    <td>
+                        @Html.ActionLink("Edit", "EditMunicipality", new {Id = municipality.Id}, new {@class = "btn btn-default"})
+                        @Html.ActionLink("Delete", "DeleteMunicipality", new {municipality.Id}, new {@class = "btn btn-default"})
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<form method="POST" action="/Settings/AddMunicipality">
+    <input type="hidden" name="CountyId" value="@Model.County.Id"/>
+    <input type="hidden" name="LookUpRequirer" value="false"/>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="MunicipalityName">Municipality Name</label>
+                <input type="text" class="form-control" name="MunicipalityName" id="MunicipalityName" placeHolder="Municipality Name"/>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+@*                <label>Type of Year</label>*@
+                
+                <label for="Calendar">Calendar</label>
+                <input type="checkbox" name="Calendar" value="true" checked="checked" class="form-control"/>
+                <label for="Fiscal">Fiscal</label>
+                <input type="checkbox" name="Fiscal" value="true" class="form-control"/>
+                
+
+@*                <div class=" radio-inline">*@
+@*                    <label>*@
+@*                        <input type="radio" name="Calendar" id="optionsRadios1" value="true" checked>Calendar*@
+@*                    </label>*@
+@*                </div>*@
+@*                <div class=" radio-inline">*@
+@*                    <label>*@
+@*                        <input type="radio" name="Calendar" id="optionsRadios2" value="False">Fiscal*@
+@*                    </label>*@
+@*                </div>*@
+            </div>
+            <input type="submit" class="btn btn-primary" value="Save"/>
+        </div>
+    </div>
+</form>

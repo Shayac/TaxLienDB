@@ -1,0 +1,55 @@
+﻿@using DataLayer
+@model IEnumerable<DataLayer.County>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <th>County Name</th>
+                <th>Recording Fee</th>
+                <th>Edit</th>
+            </tr>
+            @foreach (County county in Model)
+            {
+                <tr>
+                    <td>@county.CountyName</td>
+                    <td>@county.RecordingFee</td>
+                    <td>
+                        @Html.ActionLink("Edit", "EditCounty", new {Id = county.Id}, new {@class = "btn btn-default"})
+                        @Html.ActionLink("Delete", "DeleteCounty", new {county.Id}, new {@class = "btn btn-default"})
+                        @Html.ActionLink("Municipalities","Municipalities",new {countyId = county.Id},new {@class="btn btn-default"})
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<form method="POST" action="/Settings/AddCounty">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="CountyName">County Name</label>
+                <input type="text" class="form-control" name="CountyName" id="CountyName" placeHolder="County Name"/>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row">
+         <div class="col-md-3">
+        <div class="form-group">
+            <label for="RecordingFee">Recording Fee</label>
+            <div class=" radio-inline">
+                <label>
+                    <input type="radio" name="RecordingFee" id="optionsRadios1" value="30" checked>$30
+                </label>
+            </div>
+            <div class=" radio-inline">
+                <label>
+                    <input type="radio" name="RecordingFee" id="optionsRadios2" value="42">$42
+                </label>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Save"/>
+    </div>
+    </div>
+</form>

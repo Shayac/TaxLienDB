@@ -126,17 +126,21 @@
     <Compile Include="Controllers\PropertiesController.cs" />
     <Compile Include="Controllers\RedemptionsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SubsequentsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\MunicipalitiesViewModel.cs" />
     <Compile Include="Models\OutstandingPropertiesForMunicipalityViewModel.cs" />
     <Compile Include="Models\PaySubsequentsViewModel.cs" />
+    <Compile Include="Models\PropertyEarningsViewModel.cs" />
     <Compile Include="Models\PurchaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\bootstrap.css" />
+    <Content Include="Content\css\Print.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -192,6 +196,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\TaxLienTracker - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\TaxLienTracker - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\Bootstrap.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -228,10 +234,22 @@
     <Content Include="Views\Subsequents\Pay.cshtml" />
     <Content Include="Views\Reports\Property.cshtml" />
     <Content Include="Views\Redemptions\CalculateEarnings.cshtml" />
-    <Content Include="Views\Redemptions\RedemptionDate.cshtml" />
+    <Content Include="Views\Redemptions\Redeem.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_CountySelector.cshtml" />
     <Content Include="Views\Redemptions\Index.cshtml" />
+    <Content Include="Views\Redemptions\EditEarnings.cshtml" />
+    <Content Include="Views\Settings\Counties.cshtml" />
+    <Content Include="Views\Settings\EditCounty.cshtml" />
+    <Content Include="Views\Settings\Municipalities.cshtml" />
+    <Content Include="Views\Settings\EditMunicipality.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Reports\RedeemedLiens.cshtml" />
+    <Content Include="Views\Properties\EditProperty.cshtml" />
+    <Content Include="Views\Reports\PropertyEarnings.cshtml" />
+    <Content Include="Views\Reports\CertificateEarnings.cshtml" />
+    <Content Include="Views\Reports\SubsequentsEarnings.cshtml" />
+    <Content Include="Views\Subsequents\ListForMunicipality.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

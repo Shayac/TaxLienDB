@@ -1,34 +1,18 @@
-﻿@using System.Collections
-@using DataLayer
-@model TaxLienTracker4.Models.PropertyEarningsProjectionViewModel
+﻿@using DataLayer
+@model Property
 @{
-    Property property = Model.Property;
-    Municipality municipality = Model.Property.Municipality;
-    IEnumerable<Certificate> certificates = Model.Property.Certificates;
+    Property property = Model;
+    Municipality municipality = Model.Municipality;
+    IEnumerable<Certificate> certificates = Model.Certificates;
     Certificate certificate = certificates.First();
-    IEnumerable<Subsequent> subsequents = Model.Property.Subsequents;
-    IEnumerable<Earning> earnings = Model.Property.Earnings;
+    IEnumerable<Subsequent> subsequents = Model.Subsequents;
+    IEnumerable<Earning> earnings = Model.Earnings;
 }
 <div class="row">
+    
     <div class="col-md-4">
         
-        <form method="POST" action="~/Redemptions/InsertDate">
-            <div class="form-group">
-                <div class="control-group">
-                    <label for="date-picker-3" class="control-label">Calculate to</label>
-                    <div class="controls">
-                        <div class="input-group">
-                            <input type="hidden" name="propertyId" value="@property.Id"/>
-                            <input id="date-picker-3" type="text" class="date-picker form-control" name="redemptionDate" />
-                            <label for="date-picker-3" class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <input type="submit" class="btn btn-success" value="Calculate"/>
-        </form>
-
+            
         <p>@property.OwnerFirstName, @property.OwnerLastName</p>
         <p>@municipality.MunicipalityName</p>
         <p>@property.HouseNum @property.StreetName</p>
@@ -40,51 +24,32 @@
         <br/>
         <hr/>
         <p>@certificate.CertHolderFirstName @certificate.CertHolderLastName</p>
-        <table class="table table-bordered table-striped table-hover">
-            <tr>
-                <th>Certificate Type</th>
-                <th>Lien Amount</th>
-                <th>Premium</th>
-                <th>Interest Rate</th>
-                <th>Looked Up</th>
-            </tr>
-            @foreach (Certificate c in certificates)
-            {
-                <tr>
-                    <td>@c.CertificateType.ToString()</td>
-                    <td>@c.LienAmount</td>
-                    <td>@c.Premium</td>
-                    <td>@c.InterestRate</td>
-                    <td>@c.LookedUp</td>
-                </tr>
-            }
-        </table>
-        
-        <div class="col-md-4">
-            <table class="table table-bordered table-striped table-hover">
-                <tr>
-                    <th>Subsequent Amount</th>
-                    <th>Below 1500</th>
-                    <th>Above 1500</th>
-                    <th>Outlay Date</th>
-                    <th>Earnings</th>
-                </tr>
-                @foreach (Subsequent s in subsequents)
-                {
-                    <tr>
-                        <td>@s.SubsequentAmount</td>
-                        <td>@s.Below1500</td>
-                        <td>@s.Above1500</td>
-                        <td>@s.OutLayDate</td>
-                        <td>@s.InterestEarnings</td>
-                    </tr>
-                }
-            </table>
-        </div>
 
-
-        
     </div>
+   
+    
+    <div class="col-md-4">
+        
+        <form method="POST" action="~/Redemptions/Redeem">
+            <div class="form-group">
+                <div class="control-group">
+                    <label for="redemptionDatePicker" class="control-label">Calculate to</label>
+                    <div class="controls">
+                        <div class="input-group">
+                            <input id="propertyId" type="hidden" name="propertyId" value="@property.Id"/>
+                            <input id="redemptionDatePicker" type="text" class="date-picker form-control" name="redemptionDate" />
+                            <label for="redemptionDatePicker" class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-success" value="Calculate" id="RedemptionDateSubmitButton"/>
+        </form>
+
+    </div>
+    
+
 </div>
 
 @section scripts {

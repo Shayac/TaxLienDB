@@ -7,12 +7,13 @@
     @Styles.Render("~/Content/css/bootstrap.css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/css/Print.css" type="text/css" media="print"/>
 </head>
     <body>
         <header>
             
             
-            <div class="navbar navbar-default" role="navigation">
+            <div class="navbar navbar-default noprint" role="navigation">
 
                 <div class="container">
                     <div class="navbar-header">
@@ -26,13 +27,13 @@
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Reports <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Outstanding Liens</a></li>
-                                    <li><a href="#">Redeemed Liens</a></li>
+                                    <li><a href="/Reports">Redeemed Liens</a></li>
                                 </ul>
                             </li>
                             <li class="dropdown">
                                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/settings/countiesandmunicipalities">Counties And Municipalities</a></li>
+                                    <li><a href="/settings/counties">Counties</a></li>
                                     
                                 </ul>
                             </li>

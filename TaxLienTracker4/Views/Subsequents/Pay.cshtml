@@ -3,73 +3,75 @@
 
 <div class="row">
     
-    
-    <h3>Subsequents for: @Model.Property.Block, @Model.Property.Lot </h3><br/>
-    <div class="row">
-        <div class="col-md-3 ">
-            <div class="form-group">
-                <div class="control-group">
-                    <label for="date-picker-3" class="control-label">Paid To:</label>
-                    <div class="controls">
-                        <div class="input-group">
-                            <input id="subsequentsDatePicker" type="text" class="date-picker form-control" name="subsequents[0].OutLayDate" />
-                            <label for="subsequentsDatePicker" class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i>
-                            </label>
-                        </div>
+    <div class="col-md-4">
+        <h3>Subsequents for: @Model.Property.Block, @Model.Property.Lot </h3><br/>
+    </div>
+
+
+    <div class="col-md-3 ">
+        <div class="form-group">
+            <div class="control-group">
+                <label for="date-picker-3" class="control-label">Paid To:</label>
+                <div class="controls">
+                    <div class="input-group">
+                        <input id="subsequentsDatePicker" type="text" class="date-picker form-control" name="subsequents[0].OutLayDate" />
+                        <label for="subsequentsDatePicker" class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i>
+                        </label>
                     </div>
                 </div>
-        </div>
-    </div>
-    
-
-    <div class="row">
-        <div class="col-md-3"> 
-            <form method="POST" id="PayForm">
-                
             </div>
-                <div class="form-group">
-                    <label>Tax</label>
-                    <input type="hidden" value="1" name="subsequents[0].CertificateType"/>
-                    <input type="hidden" value="@Model.Property.Id" name="subsequents[0].PropertyId"/>
-                    <input type="hidden" value="" class="OutLayDate" name="subsequents[0].OutLayDate"/>
-                    <input type="text" class="form-control" placeholder="Subsequent Amount" name="subsequents[0].SubsequentAmount"/>
-                    <input type="hidden" value="@Model.Property.Certificates.First().Id" name="subsequents[0].CertificateId"/>
-                    <br/>
-                </div>
-                <div class="form-group">
-                    <label>Water</label>
-                    <input type="hidden" value="2" name="subsequents[1].CertificateType"/>
-                    <input type="hidden" value="@Model.Property.Id" name="subsequents[1].PropertyId"/>
-                    <input type="hidden" value="" class="OutLayDate"name="subsequents[1].OutLayDate"/>
-                    <input type="text" class="form-control" placeholder="Subsequent Amount" name="subsequents[1].SubsequentAmount"/>
-                    <input type="hidden" value="@Model.Property.Certificates.First().Id" name="subsequents[1].CertificateId"/>
-                    <br/>
-                </div> 
-                <div class="form-group">
-                    <label>Sewer</label>
-                    <input type="hidden" value="3" name="subsequents[2].CertificateType"/>
-                    <input type="hidden" value="@Model.Property.Id" name="subsequents[2].PropertyId"/>
-                    <input type="hidden" value="" class="OutLayDate"name="subsequents[2].OutLayDate"/>
-                    <input type="text" class="form-control" placeholder="Subsequent Amount" name="subsequents[2].SubsequentAmount"/>
-                    <input type="hidden" value="@Model.Property.Certificates.First().Id" name="subsequents[2].CertificateId"/>
-                    <br/>
-                </div> 
-                <div class="form-group">
-                    <label>Other</label>
-                    <input type="hidden" value="4" name="subsequents[3].CertificateType"/>
-                    <input type="hidden" value="@Model.Property.Id" name="subsequents[3].PropertyId"/>
-                    <input type="hidden" value="" class="OutLayDate"name="subsequents[3].OutLayDate"/>
-                    <input type="text" class="form-control" placeholder="Subsequent Amount" name="subsequents[3].SubsequentAmount"/>
-                    <input type="hidden" value="@Model.Property.Certificates.First().Id" name="subsequents[3].CertificateId"/>
-                    <br/>
-                </div>  
-                <input type="submit" class="btn btn-primary" value="Save"/>
-            </form>
-        </div>
-    
-    
+        </div> 
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-3"> 
+        <form method="POST" id="PayForm">
+                
+            
+            <div class="form-group">
+                <label>Tax</label>
+                <input type="hidden" value="1" name="subsequents[0].CertificateType"/>
+                <input type="hidden" value="@Model.Property.Id" name="subsequents[0].PropertyId"/>
+                <input type="hidden" value="" class="OutLayDate" name="subsequents[0].OutLayDate"/>
+                <input type="text" class="form-control" placeholder="Subsequent Amount" name="subsequents[0].SubsequentAmount"/>
+                <input type="hidden" value="@Model.Property.Certificates.First().Id" name="subsequents[0].CertificateId"/>
+                <br/>
+            </div>
+            <div class="form-group">
+                <label>Water</label>
+                <input type="hidden" value="2" name="subsequents[1].CertificateType"/>
+                <input type="hidden" value="@Model.Property.Id" name="subsequents[1].PropertyId"/>
+                <input type="hidden" value="" class="OutLayDate"name="subsequents[1].OutLayDate"/>
+                <input type="text" class="form-control" placeholder="Subsequent Amount" name="subsequents[1].SubsequentAmount"/>
+                <input type="hidden" value="@Model.Property.Certificates.First().Id" name="subsequents[1].CertificateId"/>
+                <br/>
+            </div> 
+            <div class="form-group">
+                <label>Sewer</label>
+                <input type="hidden" value="3" name="subsequents[2].CertificateType"/>
+                <input type="hidden" value="@Model.Property.Id" name="subsequents[2].PropertyId"/>
+                <input type="hidden" value="" class="OutLayDate"name="subsequents[2].OutLayDate"/>
+                <input type="text" class="form-control" placeholder="Subsequent Amount" name="subsequents[2].SubsequentAmount"/>
+                <input type="hidden" value="@Model.Property.Certificates.First().Id" name="subsequents[2].CertificateId"/>
+                <br/>
+            </div> 
+            <div class="form-group">
+                <label>Other</label>
+                <input type="hidden" value="4" name="subsequents[3].CertificateType"/>
+                <input type="hidden" value="@Model.Property.Id" name="subsequents[3].PropertyId"/>
+                <input type="hidden" value="" class="OutLayDate"name="subsequents[3].OutLayDate"/>
+                <input type="text" class="form-control" placeholder="Subsequent Amount" name="subsequents[3].SubsequentAmount"/>
+                <input type="hidden" value="@Model.Property.Certificates.First().Id" name="subsequents[3].CertificateId"/>
+                <br/>
+            </div>  
+            <input type="submit" class="btn btn-primary" value="Save"/>
+        </form>
+    </div>
+    
+    
+</div>
+
 
 @section scripts {
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>

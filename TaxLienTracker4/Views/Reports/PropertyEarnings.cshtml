@@ -1,0 +1,62 @@
+﻿@model TaxLienTracker4.Models.PropertyEarningsViewModel
+
+<div class="row">
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Certificates Principal</th>
+            <th>Premium</th>
+            <th>Subsequents Principal</th>
+            <th>Fees</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>Total Outlay</th>
+        </tr>
+        <tr>
+            <td>@Model.TotalCertificateOutlay</td>
+            <td>@Model.TotalPremium</td>
+            <td>@Model.TotalSubsequentsOutlay</td>
+            <td>need to add fees</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>@Model.TotalInvestment</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th>Total Certificate Interest</th>
+            <th>Total Subsequents Interest</th>
+            <th>2/4/6 Penalty</th>
+            <th>Year End Penalty</th>
+            <th>Lookup Fee</th>
+            <th>Municipality Mistake</th>
+            <th></th>
+            <th>Total Earnings</th>
+        </tr>
+        <tr>
+            <td>@Model.TotalCertificateInterestEarnings</td>
+            <td>@Model.TotalSubsequentsInterestEarnings</td>
+            <td>@Model.TwoFourSixPenalty</td>
+            <td>@Model.YearEndPenalty</td>
+            <td>@Model.LookUpFee</td>
+            <td>@Model.MunicipalityMistake</td>
+            <td></td>
+            <td>@Model.TotalEarnings</td>
+        </tr>
+    </table>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        @Html.ActionLink("Certificate Earnings", "CertificateEarnings", new{propertyId = Model.Property.Id}, new {@class = "btn btn-default"})
+        @Html.ActionLink("Subsequents Earnings","SubsequentsEarnings", new{propertyId = Model.Property.Id}, new {@class = "btn btn-default"})
+    </div>
+</div>

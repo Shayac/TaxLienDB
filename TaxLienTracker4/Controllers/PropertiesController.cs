@@ -16,8 +16,7 @@ namespace TaxLienTracker4.Controllers
         // GET: /Properties/
         public ActionResult Purchase()
         {
-            PurchaseViewModel model = new PurchaseViewModel();
-            model.Counties = _entityManager.Counties();
+            var model = new PurchaseViewModel {Counties = _entityManager.Counties()};
             return View(model);
         }
 
@@ -40,5 +39,12 @@ namespace TaxLienTracker4.Controllers
             
             return RedirectToAction("OutstandingPropertiesForMunicipality", "Reports", new { municipalityId = property.MunicipalityId });
         }
+
+        public ActionResult EditProperty(int propertyId)
+        {
+            return View(_entityManager.Property(propertyId));
+        }
+
+        
     }
 }

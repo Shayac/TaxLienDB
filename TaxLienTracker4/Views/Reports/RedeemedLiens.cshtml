@@ -1,0 +1,22 @@
+﻿@using DataLayer
+@model IEnumerable<DataLayer.Property>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table table-hover table-bordered table-striped">
+            <tr>
+                <th>Owner</th>
+                <th>Block/Lot</th>
+                <th>Links</th>
+            </tr>
+            @foreach (Property property in Model)
+            {
+                <tr>
+                    <td>@property.OwnerFirstName @property.OwnerLastName</td>
+                    <td>@property.Block, @property.Lot </td>
+                    <td>@Html.ActionLink("Report", "Property", new {propertyId = property.Id}, new {@class = "btn btn-default"})</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

@@ -25,14 +25,14 @@ namespace DataLayer
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Certificate> Certificates { get; set; }
         public DbSet<CertificateType> CertificateTypes { get; set; }
-        public DbSet<County> Counties { get; set; }
         public DbSet<Earning> Earnings { get; set; }
         public DbSet<EarningsType> EarningsTypes { get; set; }
         public DbSet<Municipality> Municipalities { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<PropertyType> PropertyTypes { get; set; }
+        public DbSet<Certificate> Certificates { get; set; }
         public DbSet<Subsequent> Subsequents { get; set; }
+        public DbSet<County> Counties { get; set; }
     }
 }

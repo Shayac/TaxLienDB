@@ -9,6 +9,11 @@ namespace TaxLienTracker4.Controllers
     {
         private readonly EntityManager _entityManager = new EntityManager();
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult OutstandingPropertiesForMunicipality(int municipalityId)
         {
             var model = new OutstandingPropertiesForMunicipalityViewModel
@@ -16,13 +21,40 @@ namespace TaxLienTracker4.Controllers
                     Properties = _entityManager.OutstandingProperties(municipalityId)
                 };
 
-
             return View(model);
         }
 
-        public ActionResult Property(int id)
+        public ActionResult RedeemedLiens(int municipalityId)
         {
-           return View(_entityManager.Property(id));
+            return View(_entityManager.RedeemedProperties(municipalityId));
+        }
+
+        public ActionResult Property(int propertyId)
+        {
+            var model = new PropertyEarningsViewModel()
+                {
+                    Property = _entityManager.Property(propertyId)
+                };
+            return View(model);
+        }
+
+        public ActionResult PropertyEarnings(int propertyId)
+        {
+            var model = new PropertyEarningsViewModel()
+                {
+                    Property = _entityManager.Property(propertyId)
+                };
+            return View(model);
+        }
+
+        public ActionResult CertificateEarnings(int propertyId)
+        {
+            return View(_entityManager.Property(propertyId));
+        }
+
+        public ActionResult SubsequentsEarnings(int propertyId)
+        {
+            return View(_entityManager.Property(propertyId));
         }
     }
 }

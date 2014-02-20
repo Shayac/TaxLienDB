@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="TaxLienDataBaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TaxLienDataBaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="TaxLienDataBaseModelStoreContainer">
           <EntitySet Name="Certificates" EntityType="TaxLienDataBaseModel.Store.Certificates" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CertificateTypes" EntityType="TaxLienDataBaseModel.Store.CertificateTypes" store:Type="Tables" Schema="dbo" />
@@ -71,6 +71,7 @@
           <Property Name="DateOfPurchase" Type="datetime" Nullable="false" />
           <Property Name="RedemptionDate" Type="datetime" />
           <Property Name="CertificateType" Type="int" />
+          <Property Name="AccrualPeriod" Type="int" />
         </EntityType>
         <EntityType Name="CertificateTypes">
           <Key>
@@ -84,7 +85,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="CountyName" Type="nchar" Nullable="false" MaxLength="10" />
+          <Property Name="CountyName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="RecordingFee" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Earnings">
@@ -150,6 +151,7 @@
           <Property Name="CertificateType" Type="int" Nullable="false" />
           <Property Name="PropertyId" Type="int" Nullable="false" />
           <Property Name="InterestEarnings" Type="money" />
+          <Property Name="AccrualPeriod" Type="int" />
         </EntityType>
         <Association Name="FK_Certificates_CertificateTypes">
           <End Role="CertificateTypes" Type="TaxLienDataBaseModel.Store.CertificateTypes" Multiplicity="0..1" />
@@ -271,41 +273,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TaxLienDataBaseModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="TaxLienDataBaseEntities" p1:LazyLoadingEnabled="true">
-          <EntitySet Name="Certificates" EntityType="TaxLienDataBaseModel.Certificate" />
           <EntitySet Name="CertificateTypes" EntityType="TaxLienDataBaseModel.CertificateType" />
-          <EntitySet Name="Counties" EntityType="TaxLienDataBaseModel.County" />
           <EntitySet Name="Earnings" EntityType="TaxLienDataBaseModel.Earning" />
           <EntitySet Name="EarningsTypes" EntityType="TaxLienDataBaseModel.EarningsType" />
           <EntitySet Name="Municipalities" EntityType="TaxLienDataBaseModel.Municipality" />
           <EntitySet Name="Properties" EntityType="TaxLienDataBaseModel.Property" />
           <EntitySet Name="PropertyTypes" EntityType="TaxLienDataBaseModel.PropertyType" />
-          <EntitySet Name="Subsequents" EntityType="TaxLienDataBaseModel.Subsequent" />
-          <AssociationSet Name="FK_Certificates_CertificateTypes" Association="TaxLienDataBaseModel.FK_Certificates_CertificateTypes">
-            <End Role="CertificateTypes" EntitySet="CertificateTypes" />
-            <End Role="Certificates" EntitySet="Certificates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Certificates_Properties" Association="TaxLienDataBaseModel.FK_Certificates_Properties">
-            <End Role="Properties" EntitySet="Properties" />
-            <End Role="Certificates" EntitySet="Certificates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Subsequents_Certificates" Association="TaxLienDataBaseModel.FK_Subsequents_Certificates">
-            <End Role="Certificates" EntitySet="Certificates" />
-            <End Role="Subsequents" EntitySet="Subsequents" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Subsequents_CertificateTypes" Association="TaxLienDataBaseModel.FK_Subsequents_CertificateTypes">
-            <End Role="CertificateTypes" EntitySet="CertificateTypes" />
-            <End Role="Subsequents" EntitySet="Subsequents" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Municipalities_Counties" Association="TaxLienDataBaseModel.FK_Municipalities_Counties">
-            <End Role="Counties" EntitySet="Counties" />
-            <End Role="Municipalities" EntitySet="Municipalities" />
-          </AssociationSet>
           <AssociationSet Name="FK_Earnings_EarningsTypes" Association="TaxLienDataBaseModel.FK_Earnings_EarningsTypes">
             <End Role="EarningsTypes" EntitySet="EarningsTypes" />
             <End Role="Earnings" EntitySet="Earnings" />
@@ -322,47 +300,42 @@
             <End Role="PropertyTypes" EntitySet="PropertyTypes" />
             <End Role="Properties" EntitySet="Properties" />
           </AssociationSet>
+          <EntitySet Name="Certificates" EntityType="TaxLienDataBaseModel.Certificate" />
+          <EntitySet Name="Subsequents" EntityType="TaxLienDataBaseModel.Subsequent" />
+          <AssociationSet Name="FK_Certificates_CertificateTypes" Association="TaxLienDataBaseModel.FK_Certificates_CertificateTypes">
+            <End Role="CertificateType" EntitySet="CertificateTypes" />
+            <End Role="Certificate" EntitySet="Certificates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Certificates_Properties" Association="TaxLienDataBaseModel.FK_Certificates_Properties">
+            <End Role="Property" EntitySet="Properties" />
+            <End Role="Certificate" EntitySet="Certificates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subsequents_Certificates" Association="TaxLienDataBaseModel.FK_Subsequents_Certificates">
+            <End Role="Certificate" EntitySet="Certificates" />
+            <End Role="Subsequent" EntitySet="Subsequents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subsequents_CertificateTypes" Association="TaxLienDataBaseModel.FK_Subsequents_CertificateTypes">
+            <End Role="CertificateType" EntitySet="CertificateTypes" />
+            <End Role="Subsequent" EntitySet="Subsequents" />
+          </AssociationSet>
           <AssociationSet Name="FK_Subsequents_Properties" Association="TaxLienDataBaseModel.FK_Subsequents_Properties">
-            <End Role="Properties" EntitySet="Properties" />
-            <End Role="Subsequents" EntitySet="Subsequents" />
+            <End Role="Property" EntitySet="Properties" />
+            <End Role="Subsequent" EntitySet="Subsequents" />
+          </AssociationSet>
+          <EntitySet Name="Counties" EntityType="TaxLienDataBaseModel.County" />
+          <AssociationSet Name="FK_Municipalities_Counties" Association="TaxLienDataBaseModel.FK_Municipalities_Counties">
+            <End Role="County" EntitySet="Counties" />
+            <End Role="Municipality" EntitySet="Municipalities" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Certificate">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="PropertyId" Type="Int32" Nullable="false" />
-          <Property Name="CertHolderFirstName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="CertHolderLastName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="LienAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Premium" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="InterestRate" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="LookedUp" Type="Boolean" />
-          <Property Name="DateOfPurchase" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RedemptionDate" Type="DateTime" Precision="3" />
-          <Property Name="CertificateType" Type="Int32" />
-          <NavigationProperty Name="CertificateType1" Relationship="TaxLienDataBaseModel.FK_Certificates_CertificateTypes" FromRole="Certificates" ToRole="CertificateTypes" />
-          <NavigationProperty Name="Property" Relationship="TaxLienDataBaseModel.FK_Certificates_Properties" FromRole="Certificates" ToRole="Properties" />
-          <NavigationProperty Name="Subsequents" Relationship="TaxLienDataBaseModel.FK_Subsequents_Certificates" FromRole="Certificates" ToRole="Subsequents" />
-        </EntityType>
         <EntityType Name="CertificateType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
           <Property Name="CertificateType1" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="Certificates" Relationship="TaxLienDataBaseModel.FK_Certificates_CertificateTypes" FromRole="CertificateTypes" ToRole="Certificates" />
-          <NavigationProperty Name="Subsequents" Relationship="TaxLienDataBaseModel.FK_Subsequents_CertificateTypes" FromRole="CertificateTypes" ToRole="Subsequents" />
-        </EntityType>
-        <EntityType Name="County">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="CountyName" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="true" />
-          <Property Name="RecordingFee" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <NavigationProperty Name="Municipalities" Relationship="TaxLienDataBaseModel.FK_Municipalities_Counties" FromRole="Counties" ToRole="Municipalities" />
+          <NavigationProperty Name="Certificates" Relationship="TaxLienDataBaseModel.FK_Certificates_CertificateTypes" FromRole="CertificateType" ToRole="Certificate" />
+          <NavigationProperty Name="Subsequents" Relationship="TaxLienDataBaseModel.FK_Subsequents_CertificateTypes" FromRole="CertificateType" ToRole="Subsequent" />
         </EntityType>
         <EntityType Name="Earning">
           <Key>
@@ -393,8 +366,8 @@
           <Property Name="LookUpRequirer" Type="Boolean" Nullable="false" />
           <Property Name="Calendar" Type="Boolean" Nullable="false" />
           <Property Name="Fiscal" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="County" Relationship="TaxLienDataBaseModel.FK_Municipalities_Counties" FromRole="Municipalities" ToRole="Counties" />
           <NavigationProperty Name="Properties" Relationship="TaxLienDataBaseModel.FK_Properties_Municipalities" FromRole="Municipalities" ToRole="Properties" />
+          <NavigationProperty Name="County" Relationship="TaxLienDataBaseModel.FK_Municipalities_Counties" FromRole="Municipality" ToRole="County" />
         </EntityType>
         <EntityType Name="Property">
           <Key>
@@ -411,11 +384,11 @@
           <Property Name="OwnerLastName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="MunicipalityId" Type="Int32" Nullable="false" />
           <Property Name="PropertyTypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Certificates" Relationship="TaxLienDataBaseModel.FK_Certificates_Properties" FromRole="Properties" ToRole="Certificates" />
           <NavigationProperty Name="Earnings" Relationship="TaxLienDataBaseModel.FK_Earnings_Properties" FromRole="Properties" ToRole="Earnings" />
           <NavigationProperty Name="Municipality" Relationship="TaxLienDataBaseModel.FK_Properties_Municipalities" FromRole="Properties" ToRole="Municipalities" />
           <NavigationProperty Name="PropertyType" Relationship="TaxLienDataBaseModel.FK_Properties_PropertyTypes" FromRole="Properties" ToRole="PropertyTypes" />
-          <NavigationProperty Name="Subsequents" Relationship="TaxLienDataBaseModel.FK_Subsequents_Properties" FromRole="Properties" ToRole="Subsequents" />
+          <NavigationProperty Name="Certificates" Relationship="TaxLienDataBaseModel.FK_Certificates_Properties" FromRole="Property" ToRole="Certificate" />
+          <NavigationProperty Name="Subsequents" Relationship="TaxLienDataBaseModel.FK_Subsequents_Properties" FromRole="Property" ToRole="Subsequent" />
         </EntityType>
         <EntityType Name="PropertyType">
           <Key>
@@ -425,83 +398,6 @@
           <Property Name="PropertyType1" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Properties" Relationship="TaxLienDataBaseModel.FK_Properties_PropertyTypes" FromRole="PropertyTypes" ToRole="Properties" />
         </EntityType>
-        <EntityType Name="Subsequent">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="SubsequentAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Above1500" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="Below1500" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
-          <Property Name="OutLayDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CertificateId" Type="Int32" Nullable="false" />
-          <Property Name="CertificateType" Type="Int32" Nullable="false" />
-          <Property Name="PropertyId" Type="Int32" Nullable="false" />
-          <Property Name="InterestEarnings" Type="Decimal" Precision="19" Scale="4" />
-          <NavigationProperty Name="Certificate" Relationship="TaxLienDataBaseModel.FK_Subsequents_Certificates" FromRole="Subsequents" ToRole="Certificates" />
-          <NavigationProperty Name="CertificateType1" Relationship="TaxLienDataBaseModel.FK_Subsequents_CertificateTypes" FromRole="Subsequents" ToRole="CertificateTypes" />
-          <NavigationProperty Name="Property" Relationship="TaxLienDataBaseModel.FK_Subsequents_Properties" FromRole="Subsequents" ToRole="Properties" />
-        </EntityType>
-        <Association Name="FK_Certificates_CertificateTypes">
-          <End Role="CertificateTypes" Type="TaxLienDataBaseModel.CertificateType" Multiplicity="0..1" />
-          <End Role="Certificates" Type="TaxLienDataBaseModel.Certificate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CertificateTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Certificates">
-              <PropertyRef Name="CertificateType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Certificates_Properties">
-          <End Role="Properties" Type="TaxLienDataBaseModel.Property" Multiplicity="1" />
-          <End Role="Certificates" Type="TaxLienDataBaseModel.Certificate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Properties">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Certificates">
-              <PropertyRef Name="PropertyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Subsequents_Certificates">
-          <End Role="Certificates" Type="TaxLienDataBaseModel.Certificate" Multiplicity="1" />
-          <End Role="Subsequents" Type="TaxLienDataBaseModel.Subsequent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Certificates">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Subsequents">
-              <PropertyRef Name="CertificateId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Subsequents_CertificateTypes">
-          <End Role="CertificateTypes" Type="TaxLienDataBaseModel.CertificateType" Multiplicity="1" />
-          <End Role="Subsequents" Type="TaxLienDataBaseModel.Subsequent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CertificateTypes">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Subsequents">
-              <PropertyRef Name="CertificateType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Municipalities_Counties">
-          <End Role="Counties" Type="TaxLienDataBaseModel.County" Multiplicity="1" />
-          <End Role="Municipalities" Type="TaxLienDataBaseModel.Municipality" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Counties">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Municipalities">
-              <PropertyRef Name="CountyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Earnings_EarningsTypes">
           <End Role="EarningsTypes" Type="TaxLienDataBaseModel.EarningsType" Multiplicity="1" />
           <End Role="Earnings" Type="TaxLienDataBaseModel.Earning" Multiplicity="*" />
@@ -550,15 +446,122 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Subsequents_Properties">
-          <End Role="Properties" Type="TaxLienDataBaseModel.Property" Multiplicity="1" />
-          <End Role="Subsequents" Type="TaxLienDataBaseModel.Subsequent" Multiplicity="*" />
+        <EntityType Name="Certificate">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PropertyId" Nullable="false" />
+          <Property Type="String" Name="CertHolderFirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CertHolderLastName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="LienAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Premium" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="InterestRate" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="LookedUp" />
+          <Property Type="DateTime" Name="DateOfPurchase" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="RedemptionDate" Precision="3" />
+          <Property Type="Int32" Name="CertificateType" />
+          <Property Type="Int32" Name="AccrualPeriod" />
+          <NavigationProperty Name="CertificateType1" Relationship="TaxLienDataBaseModel.FK_Certificates_CertificateTypes" FromRole="Certificate" ToRole="CertificateType" />
+          <NavigationProperty Name="Property" Relationship="TaxLienDataBaseModel.FK_Certificates_Properties" FromRole="Certificate" ToRole="Property" />
+          <NavigationProperty Name="Subsequents" Relationship="TaxLienDataBaseModel.FK_Subsequents_Certificates" FromRole="Certificate" ToRole="Subsequent" />
+        </EntityType>
+        <EntityType Name="Subsequent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Decimal" Name="SubsequentAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Above1500" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Below1500" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="OutLayDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CertificateId" Nullable="false" />
+          <Property Type="Int32" Name="CertificateType" Nullable="false" />
+          <Property Type="Int32" Name="PropertyId" Nullable="false" />
+          <Property Type="Decimal" Name="InterestEarnings" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="AccrualPeriod" />
+          <NavigationProperty Name="Certificate" Relationship="TaxLienDataBaseModel.FK_Subsequents_Certificates" FromRole="Subsequent" ToRole="Certificate" />
+          <NavigationProperty Name="CertificateType1" Relationship="TaxLienDataBaseModel.FK_Subsequents_CertificateTypes" FromRole="Subsequent" ToRole="CertificateType" />
+          <NavigationProperty Name="Property" Relationship="TaxLienDataBaseModel.FK_Subsequents_Properties" FromRole="Subsequent" ToRole="Property" />
+        </EntityType>
+        <Association Name="FK_Certificates_CertificateTypes">
+          <End Type="TaxLienDataBaseModel.CertificateType" Role="CertificateType" Multiplicity="0..1" />
+          <End Type="TaxLienDataBaseModel.Certificate" Role="Certificate" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Properties">
+            <Principal Role="CertificateType">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Subsequents">
+            <Dependent Role="Certificate">
+              <PropertyRef Name="CertificateType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Certificates_Properties">
+          <End Type="TaxLienDataBaseModel.Property" Role="Property" Multiplicity="1" />
+          <End Type="TaxLienDataBaseModel.Certificate" Role="Certificate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Certificate">
               <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subsequents_Certificates">
+          <End Type="TaxLienDataBaseModel.Certificate" Role="Certificate" Multiplicity="1" />
+          <End Type="TaxLienDataBaseModel.Subsequent" Role="Subsequent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Certificate">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subsequent">
+              <PropertyRef Name="CertificateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subsequents_CertificateTypes">
+          <End Type="TaxLienDataBaseModel.CertificateType" Role="CertificateType" Multiplicity="1" />
+          <End Type="TaxLienDataBaseModel.Subsequent" Role="Subsequent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CertificateType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subsequent">
+              <PropertyRef Name="CertificateType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subsequents_Properties">
+          <End Type="TaxLienDataBaseModel.Property" Role="Property" Multiplicity="1" />
+          <End Type="TaxLienDataBaseModel.Subsequent" Role="Subsequent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subsequent">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="County">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CountyName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="RecordingFee" Nullable="false" Precision="19" Scale="4" />
+          <NavigationProperty Name="Municipalities" Relationship="TaxLienDataBaseModel.FK_Municipalities_Counties" FromRole="County" ToRole="Municipality" />
+        </EntityType>
+        <Association Name="FK_Municipalities_Counties">
+          <End Type="TaxLienDataBaseModel.County" Role="County" Multiplicity="1" />
+          <End Type="TaxLienDataBaseModel.Municipality" Role="Municipality" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="County">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Municipality">
+              <PropertyRef Name="CountyId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -568,37 +571,11 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TaxLienDataBaseModelStoreContainer" CdmEntityContainer="TaxLienDataBaseEntities">
-          <EntitySetMapping Name="Certificates">
-            <EntityTypeMapping TypeName="TaxLienDataBaseModel.Certificate">
-              <MappingFragment StoreEntitySet="Certificates">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
-                <ScalarProperty Name="CertHolderFirstName" ColumnName="CertHolderFirstName" />
-                <ScalarProperty Name="CertHolderLastName" ColumnName="CertHolderLastName" />
-                <ScalarProperty Name="LienAmount" ColumnName="LienAmount" />
-                <ScalarProperty Name="Premium" ColumnName="Premium" />
-                <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
-                <ScalarProperty Name="LookedUp" ColumnName="LookedUp" />
-                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
-                <ScalarProperty Name="RedemptionDate" ColumnName="RedemptionDate" />
-                <ScalarProperty Name="CertificateType" ColumnName="CertificateType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CertificateTypes">
             <EntityTypeMapping TypeName="TaxLienDataBaseModel.CertificateType">
               <MappingFragment StoreEntitySet="CertificateTypes">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CertificateType1" ColumnName="CertificateType" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Counties">
-            <EntityTypeMapping TypeName="TaxLienDataBaseModel.County">
-              <MappingFragment StoreEntitySet="Counties">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
-                <ScalarProperty Name="RecordingFee" ColumnName="RecordingFee" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -657,18 +634,46 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Certificates">
+            <EntityTypeMapping TypeName="TaxLienDataBaseModel.Certificate">
+              <MappingFragment StoreEntitySet="Certificates">
+                <ScalarProperty Name="AccrualPeriod" ColumnName="AccrualPeriod" />
+                <ScalarProperty Name="CertificateType" ColumnName="CertificateType" />
+                <ScalarProperty Name="RedemptionDate" ColumnName="RedemptionDate" />
+                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
+                <ScalarProperty Name="LookedUp" ColumnName="LookedUp" />
+                <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
+                <ScalarProperty Name="Premium" ColumnName="Premium" />
+                <ScalarProperty Name="LienAmount" ColumnName="LienAmount" />
+                <ScalarProperty Name="CertHolderLastName" ColumnName="CertHolderLastName" />
+                <ScalarProperty Name="CertHolderFirstName" ColumnName="CertHolderFirstName" />
+                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Subsequents">
             <EntityTypeMapping TypeName="TaxLienDataBaseModel.Subsequent">
               <MappingFragment StoreEntitySet="Subsequents">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="SubsequentAmount" ColumnName="SubsequentAmount" />
-                <ScalarProperty Name="Above1500" ColumnName="Above1500" />
-                <ScalarProperty Name="Below1500" ColumnName="Below1500" />
-                <ScalarProperty Name="OutLayDate" ColumnName="OutLayDate" />
-                <ScalarProperty Name="CertificateId" ColumnName="CertificateId" />
-                <ScalarProperty Name="CertificateType" ColumnName="CertificateType" />
-                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+                <ScalarProperty Name="AccrualPeriod" ColumnName="AccrualPeriod" />
                 <ScalarProperty Name="InterestEarnings" ColumnName="InterestEarnings" />
+                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+                <ScalarProperty Name="CertificateType" ColumnName="CertificateType" />
+                <ScalarProperty Name="CertificateId" ColumnName="CertificateId" />
+                <ScalarProperty Name="OutLayDate" ColumnName="OutLayDate" />
+                <ScalarProperty Name="Below1500" ColumnName="Below1500" />
+                <ScalarProperty Name="Above1500" ColumnName="Above1500" />
+                <ScalarProperty Name="SubsequentAmount" ColumnName="SubsequentAmount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Counties">
+            <EntityTypeMapping TypeName="TaxLienDataBaseModel.County">
+              <MappingFragment StoreEntitySet="Counties">
+                <ScalarProperty Name="RecordingFee" ColumnName="RecordingFee" />
+                <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

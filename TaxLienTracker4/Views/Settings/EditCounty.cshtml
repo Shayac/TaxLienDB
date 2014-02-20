@@ -1,0 +1,49 @@
+﻿@model DataLayer.County
+
+
+<form method="POST">
+    <input type="hidden" name="Id" value="@Model.Id"/>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="CountyName">County Name</label>
+                <input type="text" class="form-control" name="CountyName" id="CountyName" value="@Model.CountyName"/>
+            </div>
+        </div>
+    </div>
+   
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="RecordingFee">Recording Fee</label>
+                <div class=" radio-inline">
+                    <label>
+                        @if (Model.RecordingFee == 30)
+                        {
+                            @Html.RadioButtonFor(c => c.RecordingFee, "30", new Dictionary<string, object> {{"checked", "checked"}})@:$30
+                        }
+                        else
+                        {
+                            @Html.RadioButtonFor(c => c.RecordingFee, "30")@:$30
+                            
+                        }
+                    </label>
+                </div>
+                <div class=" radio-inline">
+                    <label>
+                        @if (Model.RecordingFee == 42)
+                        {
+                            @Html.RadioButtonFor(c => c.RecordingFee, "42", new Dictionary<string, object> {{"checked", "checked"}})@:$42
+                        }
+                        else
+                        {
+                            @Html.RadioButtonFor(c => c.RecordingFee, "42")@:$42
+                            
+                        }
+                    </label>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Save"/>
+        </div>
+    </div>
+</form>

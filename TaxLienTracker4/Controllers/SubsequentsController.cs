@@ -56,5 +56,14 @@ namespace TaxLienTracker4.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult ListForMunicipality(int municipalityId)
+        {
+            var model = new OutstandingPropertiesForMunicipalityViewModel()
+                {
+                    Properties = _entityManager.OutstandingProperties(municipalityId)
+                };
+            return View(model);
+        }
     }
 }

@@ -5,25 +5,25 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="62c0c8e3d5e34e579c8b2d0fb99a9330" Name="Diagram1">
-        <EntityTypeShape EntityType="TaxLienDataBaseModel.Certificate" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TaxLienDataBaseModel.CertificateType" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TaxLienDataBaseModel.County" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TaxLienDataBaseModel.Earning" Width="1.5" PointX="10.5" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TaxLienDataBaseModel.EarningsType" Width="1.5" PointX="8.25" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TaxLienDataBaseModel.Municipality" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TaxLienDataBaseModel.Property" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TaxLienDataBaseModel.PropertyType" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TaxLienDataBaseModel.Subsequent" Width="1.5" PointX="12.75" PointY="4" IsExpanded="true" />
-        <AssociationConnector Association="TaxLienDataBaseModel.FK_Certificates_CertificateTypes" ManuallyRouted="false" />
-        <AssociationConnector Association="TaxLienDataBaseModel.FK_Certificates_Properties" ManuallyRouted="false" />
-        <AssociationConnector Association="TaxLienDataBaseModel.FK_Subsequents_Certificates" ManuallyRouted="false" />
-        <AssociationConnector Association="TaxLienDataBaseModel.FK_Subsequents_CertificateTypes" ManuallyRouted="false" />
-        <AssociationConnector Association="TaxLienDataBaseModel.FK_Municipalities_Counties" ManuallyRouted="false" />
         <AssociationConnector Association="TaxLienDataBaseModel.FK_Earnings_EarningsTypes" ManuallyRouted="false" />
         <AssociationConnector Association="TaxLienDataBaseModel.FK_Earnings_Properties" ManuallyRouted="false" />
         <AssociationConnector Association="TaxLienDataBaseModel.FK_Properties_Municipalities" ManuallyRouted="false" />
         <AssociationConnector Association="TaxLienDataBaseModel.FK_Properties_PropertyTypes" ManuallyRouted="false" />
-        <AssociationConnector Association="TaxLienDataBaseModel.FK_Subsequents_Properties" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TaxLienDataBaseModel.Certificate" Width="1.5" PointX="10.707477416241298" PointY="12.121239280384611" />
+        <EntityTypeShape EntityType="TaxLienDataBaseModel.Subsequent" Width="1.5" PointX="6.971483893213553" PointY="4.0263769347343485" />
+        <AssociationConnector Association="TaxLienDataBaseModel.FK_Certificates_CertificateTypes" />
+        <AssociationConnector Association="TaxLienDataBaseModel.FK_Certificates_Properties" />
+        <AssociationConnector Association="TaxLienDataBaseModel.FK_Subsequents_Certificates" />
+        <AssociationConnector Association="TaxLienDataBaseModel.FK_Subsequents_CertificateTypes" />
+        <AssociationConnector Association="TaxLienDataBaseModel.FK_Subsequents_Properties" />
+        <EntityTypeShape EntityType="TaxLienDataBaseModel.County" Width="1.5" PointX="9.899696883698784" PointY="6.0388316987263186" />
+        <AssociationConnector Association="TaxLienDataBaseModel.FK_Municipalities_Counties" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

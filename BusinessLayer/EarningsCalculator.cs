@@ -7,43 +7,74 @@ using DataLayer;
 
 namespace BusinessLayer
 {
-    public static class EarningsCalculator
+    public class EarningsCalculator
     {
-        public static void CalculateCertificatesInterest(Certificate certificate, int propertyId)
-        {
-            if (certificate.InterestRate != null && certificate.InterestRate > 0)
-            {
-                certificate.Earning = new Earning();
-                certificate.Earning.Id = certificate.Id;
-                certificate.Earning.EarningsTypeId = 1;
-                certificate.Earning.PropertyId = propertyId;
+        private Property _property;
 
-                certificate.Earning.Amount = ((certificate.LienAmount*(decimal) certificate.InterestRate)/365)*
-                                             certificate.AccrualPeriod.Value.Days;
-            }
+        public EarningsCalculator(Property property)
+        {
+            _property = property;
         }
 
-        public static void CalculateSubsequentInterest(Subsequent subsequent) //fills each subsequent.SubInterest prop
-        {
-            if (subsequent.AccrualPeriod != null)
-            {
-                 decimal below1500Accrual = 0m;
-                 decimal above1500Accrual = 0m;
-                if (subsequent.Below1500 != 0)
-                {
-                    below1500Accrual =
-                        Math.Round(((subsequent.Below1500*.08m)/365m)*(subsequent.AccrualPeriod.Value.Days + 1), 2);
-                }
+        //@todo delete all this stuff after verifying that new stuff works
+//        public static Earning CalculateCertificatesInterest(Certificate certificate, int propertyId)
+//        {
+//            Earning earning = new Earning();
+//            if (certificate.InterestRate != null && certificate.InterestRate > 0 && certificate.AccrualPeriod != null)
+//            {
+//                earning.EarningsTypeId = 1;
+//                earning.PropertyId = propertyId;
+//
+//                earning.Amount = ((certificate.LienAmount*(decimal) certificate.InterestRate)/365)*
+//                                 certificate.AccrualPeriod.Value;
+//            }
+//            return earning;
+//        }
 
-                if (subsequent.Above1500 != 0)
-                {
-                 above1500Accrual = Math.Round(((subsequent.Above1500*.18m)/365m)*(subsequent.AccrualPeriod.Value.Days+ 1),2);
-                }
-                subsequent.InterestEarnings = above1500Accrual + below1500Accrual;
-            }
-        }
+//        public static Earning CalculateSubsequentsInterest(IEnumerable<Subsequent> subsequents, int propertyId)
+        //fills each subsequent.SubInterest prop
+//        {
+//            Earning earning = new Earning();
+//            decimal? totalEarnings = null;
+//            bool first = true;
+//            foreach (Subsequent subsequent in subsequents)
+//            {
+//                if (subsequent.AccrualPeriod != null)
+//                {
 
-        public static void Calculate246Penalty(Property property)
+//                    decimal below1500Accrual = 0m;
+//                    decimal above1500Accrual = 0m;
+//                    if (subsequent.Below1500 != 0)
+//                    {
+//                        below1500Accrual =
+//                            Math.Round(((subsequent.Below1500 * .08m) / 365m) * (subsequent.AccrualPeriod.Value + 1), 2);
+//                    }
+
+//                    if (subsequent.Above1500 != 0)
+//                    {
+//                        above1500Accrual =
+//                            Math.Round(((subsequent.Above1500 * .18m) / 365m) * (subsequent.AccrualPeriod.Value + 1), 2);
+//                    }
+//                    subsequent.InterestEarnings = above1500Accrual + below1500Accrual;
+
+//                    if (subsequent.InterestEarnings != null)
+//                    {
+//                        if (first)
+//                        {
+//                            totalEarnings = 0m;
+//                            first = false;
+//                        }
+//                        totalEarnings += subsequent.InterestEarnings;
+//                    }
+
+//                }
+
+
+//            }
+//            return earning;
+//        }
+
+        public static decimal Calculate246Penalty(Property property)
         {
             decimal penalty = 0m;
             decimal amount = property.Certificates.Sum(c => c.LienAmount);
@@ -60,16 +91,10 @@ namespace BusinessLayer
                 penalty = amount*.06m;
             }
 
-            property.Earnings.Add(new Earning()
-                {
-                    Amount = Math.Round(penalty, 2),
-                    EarningsTypeId = 2,
-                    PropertyId = property.Id
-                   
-                });
+            return penalty;
         }
 
-        public static void CalculateYearEndPenalty(Property property)
+        public static decimal CalculateYearEndPenalty(Property property)
         {
             decimal totalApplicableSubsequents = 0m;
             decimal yearEndPenalty = 0;
@@ -99,25 +124,59 @@ namespace BusinessLayer
                 yearEndPenalty = totalApplicableSubsequents*.06m;
             }
 
-            property.Earnings.Add(new Earning()
-                {
-                    Amount = Math.Round(yearEndPenalty, 2),
-                    EarningsTypeId = 3,
-                    PropertyId = property.Id
-                    
-                });
+            return yearEndPenalty;
         }
 
-        public static void CalculateLookUpFee(Property property)
+        public static decimal CalculateLookUpFee(Property property)
         {
             if (!property.Municipality.LookUpRequirer || property.Certificates.First().LookedUp == true)
             {
-                property.Earnings.Add(new Earning()
+                return 12m;
+            }
+            return 0;
+        }
+
+        public static decimal CalculateCertificatesInterest(Property property)
+        {
+            decimal total = 0m;
+            foreach (Certificate certificate in property.Certificates)
+            {
+                if (certificate.InterestRate != null && certificate.AccrualPeriod != null &&
+                    certificate.InterestRate > 0)
+                {
+                    total += ((certificate.LienAmount*(decimal) certificate.InterestRate)/365)*
+                             certificate.AccrualPeriod.Value;
+                }
+            }
+            return total;
+        }
+
+        public static decimal CalculateTotalSubsequentsInterest(Property property)
+        {
+            return property.Subsequents.Sum(s => s.InterestEarnings ?? 0);
+        }
+
+        public static void CalculateEachSubsequentInterest(IEnumerable<Subsequent> subsequents)
+        {
+            foreach (Subsequent subsequent in subsequents)
+            {
+                if (subsequent.AccrualPeriod != null)
+                {
+                    decimal below1500Accrual = 0m;
+                    decimal above1500Accrual = 0m;
+                    if (subsequent.Below1500 != 0)
                     {
-                        Amount = 12m,
-                        EarningsTypeId = 4,
-                        PropertyId = property.Id
-                    });
+                        below1500Accrual =
+                            Math.Round(((subsequent.Below1500*.08m)/365m)*(subsequent.AccrualPeriod.Value + 1), 2);
+                    }
+
+                    if (subsequent.Above1500 != 0)
+                    {
+                        above1500Accrual =
+                            Math.Round(((subsequent.Above1500*.18m)/365m)*(subsequent.AccrualPeriod.Value + 1), 2);
+                    }
+                    subsequent.InterestEarnings = above1500Accrual + below1500Accrual;
+                }
             }
         }
     }

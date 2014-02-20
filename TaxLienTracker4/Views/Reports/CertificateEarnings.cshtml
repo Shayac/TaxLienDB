@@ -1,0 +1,38 @@
+﻿@using DataLayer
+@model Property
+
+@{
+    decimal certificateInterest = Model.Earnings.Where(e => e.EarningsTypeId == 1).Sum(e => e.Amount);
+    
+}
+
+@foreach (Certificate certificate in Model.Certificates)
+{
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Outlay Date</th>
+                    <th>Redemption Date</th>
+                    <th>Accrual Period</th>
+                    <th>Interest Rate</th>
+                </tr>
+                <tr>
+                    <td>@certificate.LienAmount</td>
+                    <td>@certificateInterest</td>
+                    <td>@certificate.DateOfPurchase</td>
+                    <td>@certificate.RedemptionDate</td>
+                    <td>@certificate.AccrualPeriod days</td>
+                    <td>@certificate.InterestRate</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="col-md-2">
+        @Html.ActionLink("Subsequents Earnings", "SubsequentsEarnings", new {propertyId = Model.Id}, new {@class = "btn btn-default"})
+    </div>
+</div>

@@ -16,8 +16,8 @@ namespace DataLayer
     {
         public Property()
         {
-            this.Certificates = new HashSet<Certificate>();
             this.Earnings = new HashSet<Earning>();
+            this.Certificates = new HashSet<Certificate>();
             this.Subsequents = new HashSet<Subsequent>();
         }
     
@@ -33,10 +33,10 @@ namespace DataLayer
         public int MunicipalityId { get; set; }
         public int PropertyTypeId { get; set; }
     
-        public virtual ICollection<Certificate> Certificates { get; set; }
         public virtual ICollection<Earning> Earnings { get; set; }
         public virtual Municipality Municipality { get; set; }
         public virtual PropertyType PropertyType { get; set; }
+        public virtual ICollection<Certificate> Certificates { get; set; }
         public virtual ICollection<Subsequent> Subsequents { get; set; }
     }
 }
