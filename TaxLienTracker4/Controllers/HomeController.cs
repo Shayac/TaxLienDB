@@ -7,13 +7,15 @@ using BusinessLayer;
 
 namespace TaxLienTracker4.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         //
         // GET: /Home/
 
         private readonly EntityManager entityManager = new EntityManager();
-
+        
+        
         public ActionResult Index()
         {
             return View();

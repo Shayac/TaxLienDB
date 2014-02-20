@@ -5,6 +5,7 @@ using TaxLienTracker4.Models;
 
 namespace TaxLienTracker4.Controllers
 {
+    [Authorize]
     public class ReportsController : Controller
     {
         private readonly EntityManager _entityManager = new EntityManager();

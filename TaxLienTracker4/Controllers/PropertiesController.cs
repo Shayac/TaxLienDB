@@ -9,11 +9,13 @@ using TaxLienTracker4.Models;
 
 namespace TaxLienTracker4.Controllers
 {
+    [Authorize]
     public class PropertiesController : Controller
     {
         private readonly EntityManager _entityManager = new EntityManager();
         //
         // GET: /Properties/
+        
         public ActionResult Purchase()
         {
             var model = new PurchaseViewModel {Counties = _entityManager.Counties()};

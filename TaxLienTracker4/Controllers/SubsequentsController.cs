@@ -9,6 +9,7 @@ using TaxLienTracker4.Models;
 
 namespace TaxLienTracker4.Controllers
 {
+    [Authorize]
     public class SubsequentsController : Controller
     {
         //
