@@ -63,80 +63,14 @@
                     </label>
                 </div>
             </div>
-            
-        </div>
-    </div>
-    
-    <!---- Certificate Info ---->
-    <hr/>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label>Certificate Holder First Name</label>
-                <input type="text" class="form-control" placeholder="First Name" name="Certificate.CertHolderFirstName">
-            </div>
-            <div class="form-group">
-                <label>Certificate Holder Last Name</label>
-                <input type="text" class="form-control" placeholder="Last Name" name="Certificate.CertHolderLastName">
-            </div>
-            <div class="form-group">
-                <div class="control-group">
-                    <label for="date-picker-3" class="control-label">Date Purchased</label>
-                    <div class="controls">
-                        <div class="input-group">
-                            <input id="date-picker-3" type="text" class="date-picker form-control" name="Certificate.DateOfPurchase" />
-                            <label for="date-picker-3" class="input-group-addon btn"><i class="glyphicon glyphicon-calendar"></i>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Lien Amount</label>
-                <input type="text" class="form-control" placeholder="Lien Amount" name="Certificate.LienAmount" />
-            </div>
-            <div class="form-group">
-                <label>Premium</label>
-                <input type="text" class="form-control" placeholder="Premium Amount" name="Certificate.Premium"/>
-            </div>
-            <div class="form-group">
-                <label>Interest</label> 
-                <input type="text" class="form-control" placeholder="Interest" name="Certificate.InterestRate"/>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label>Lien Type</label>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="Certificate.CertificateType" id="radioTax" value="1" checked>Tax</label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="Certificate.CertificateType" id="radioWater" value="2">Water</label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="Certificate.CertificateType" id="radioSewer" value="3">Sewer</label>
-                </div>
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="Certificate.CertificateType" id="radioOther" value="4">Other</label>
-                </div>
-            </div>
-            <div class="form-group">
-                <p class="text-danger">This Municipality requires a Look Up</p>
-                <label>Looked Up</label>
-@*                <div class="checkbox">*@
-                    <label>
-                        @Html.CheckBox("Certificate.LookedUp")
-@*                        <input type="checkbox" name="Certificate.LookedUp" > Looked Up*@
-                    </label>
-@*                </div>*@
-            </div>
             <input type="submit" class="btn btn-primary" value="Submit"/>
         </div>
     </div>
+    
+   
+   
+            
+        
 </form>
 
 @section scripts {

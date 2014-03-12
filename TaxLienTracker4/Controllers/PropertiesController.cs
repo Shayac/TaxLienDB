@@ -34,11 +34,24 @@ namespace TaxLienTracker4.Controllers
         }
 
         [HttpPost]
-        public ActionResult Purchase(Property property, Certificate certificate)
+        public ActionResult Purchase(Property property)
         {
-            property.Certificates.Add(certificate);
-            _entityManager.Add(property);
             
+            _entityManager.Add(property);
+
+            return RedirectToAction("Certificate", new {propertyId = property.Id});
+        }
+
+        public ActionResult Certificate(int propertyId)
+        {
+            return View("Certificate", propertyId);
+        }
+
+        [HttpPost]
+        public ActionResult Certificate(Certificate certificate)
+        {
+            _entityManager.Add(certificate);
+            Property property = _entityManager.Property(certificate.PropertyId);
             return RedirectToAction("OutstandingPropertiesForMunicipality", "Reports", new { municipalityId = property.MunicipalityId });
         }
 
